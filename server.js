@@ -3,9 +3,13 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
 const app = express();
+const bookRoutes = require('./routes/bookRoutes');
+
 
 // this is to parse the incoming request 
 app.use(bodyParser.json());
+
+app.use('/api/books', bookRoutes);
 
 app.get('/', (req, res) => {
     res.send('Online Bookstore API');
