@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
 const app = express();
-const bookRoutes = require('./routes/bookRoutes');
+const bookRoutes = require('./Routes/bookRoutes');
 
 
 // this is to parse the incoming request 
@@ -15,7 +15,7 @@ app.get('/', (req, res) => {
     res.send('Online Bookstore API');
 });
 
-const CONNECTION_URL = 'mongodb+srv://yashgupta:Etajlk3AJxhGyIlt@cluster0.9zczcjs.mongodb.net/?retryWrites=true&w=majority';
+const CONNECTION_URL = 'mongodb+srv://yashgupta:Lwpz6odtMX8aEqfl@cluster0.9zczcjs.mongodb.net/?retryWrites=true&w=majority';
 const PORT = process.env.PORT || 3000;
 
 mongoose.connect(CONNECTION_URL, {
