@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
 const app = express();
-const bookRoutes = require('./Routes/bookRoutes');
+const bookRoutes = require('./routes/bookRoutes');
 
 
 // this is to parse the incoming request 

@@ -1,8 +1,8 @@
 const csv = require('csvtojson');
 const fs = require('fs');
 
-const csvFilePath = '/Users/yashgupta/Developer/Book-Store/CSV2JSON/books.csv';
-const outputJsonPath = '/Users/yashgupta/Developer/Book-Store/CSV2JSON/books.json';
+const csvFilePath = '/Users/yashgupta/Developer/Book-Store/backend/csv-json/books.csv';
+const outputJsonPath = '/Users/yashgupta/Developer/Book-Store/backend/csv-json/books.json';
 
 csv()
 .fromFile(csvFilePath)
