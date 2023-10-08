@@ -1,48 +1,35 @@
 const mongoose = require('mongoose');
 
 const bookSchema = new mongoose.Schema({
-    bookID: {
-        type: Number,
-        required: true,
-        unique: true
-    },
     title: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     authors: {
         type: String,
         required: true
     },
+    genre: {
+        type: String,
+        required: true
+    },
+    price: {
+        type: Number,
+        require: true
+    },
+    description: {
+        type: String
+    },
     average_rating: {
         type: String
     },
-    isbn: {
-        type: String,
-        unique: true
-    },
-    isbn13: {
-        type: String,
-        unique: true
-    },
-    language_code: {
-        type: String
-    },
-    num_pages: {
-        type: String
-    },
     ratings_count: {
-        type: Number
+        type: String
     },
     text_reviews_count: {
-        type: Number
-    },
-    publication_date: {
         type: String
     },
-    publisher: {
-        type: String
-    }
 });
 
 const Book = mongoose.model('Book', bookSchema);

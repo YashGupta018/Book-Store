@@ -1,20 +1,36 @@
 const express = require('express');
 const router = express.Router();
 const bookController = require('../controllers/bookController');
+const { authenticate } = require('../middlewares/auth');
 
-// Get all books
-router.get('/', bookController.getAllBooks);
+// get all books - cust.
+router.get('/', (req, res, next) => {
+    console.log("Fetching all books...");
+    next();
+}, bookController.getAllBooks);
 
-// Get a specific book by ID
-router.get('/:id', bookController.getBookById);
+// get a specific book by ID - cust.
+router.get('/:id', (req, res, next) => {
+    console.log(`Fetching book with ID: ${req.params.id}`);
+    next();
+}, bookController.getBookById);
 
-// Add a new book
-router.post('/', bookController.addBook);
+// adding a new book - admin only
+router.post('/', authenticate, (req, res, next) => {
+    console.log("Attempting to add a new book...");
+    next();
+}, bookController.addBook);
 
-// Update a book by ID
-router.put('/:id', bookController.updateBook);
+// updating a book by ID - admin only
+router.put('/:id', authenticate, (req, res, next) => {
+    console.log(`Attempting to update book with ID: ${req.params.id}`);
+    next();
+}, bookController.updateBook);
 
-// Delete a book by ID
-router.delete('/:id', bookController.deleteBook);
+// deleting a book by ID - admin only
+router.delete('/:id', authenticate, (req, res, next) => {
+    console.log(`Attempting to delete book with ID: ${req.params.id}`);
+    next();
+}, bookController.deleteBook);
 
 module.exports = router;

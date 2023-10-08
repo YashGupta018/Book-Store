@@ -1,4 +1,5 @@
 const express = require('express');
+const userRoutes = require('./routes/userRoutes');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const cors = require('cors');
@@ -7,10 +8,12 @@ const app = express();
 const bookRoutes = require('./routes/bookRoutes');
 
 app.use(cors());  // CORS for all routes
+app.use(express.json());
+app.use('/api/users', userRoutes);
 
 // this is to parse the incoming request
 app.use(bodyParser.json());
-
+app.use('/api/users', require('./routes/userRoutes'));
 app.use('/api/books', bookRoutes);
 
 app.get('/', (req, res) => {
