@@ -5,14 +5,14 @@ function AppLayout({ children }) {
     return (
         <div className="app-layout">
             <header>
-                {/* Your header components like logo, navigation links, etc. */}
+                {/* header components like logo, navigation links, etc. */}
             </header>
             <main>
                 {children}
-                {/* This will render the content passed to AppLayout */}
+                {/* this will render the content passed to applayout */}
             </main>
             <footer>
-                {/* Your footer components */}
+                {/* footer components */}
             </footer>
         </div>
     );

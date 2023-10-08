@@ -8,7 +8,7 @@ router.get('/', bookController.getAllBooks);
 // Get a specific book by ID
 router.get('/:id', bookController.getBookById);
 
-// Add a new book (optional if you're only using the seeded data)
+// Add a new book
 router.post('/', bookController.addBook);
 
 // Update a book by ID

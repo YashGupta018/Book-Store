@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import AppLayout from './components/AppLayout/AppLayout.jsx';
 import BookList from './components/BookList/BookList.jsx';
 import BookDetail from './components/BookDetail/BookDetail.jsx';
@@ -12,15 +12,15 @@ function App() {
   return (
     <Router>
       <AppLayout>
-        <Switch>
-          <Route path="/" exact component={BookList} />
-          <Route path="/book/:id" exact component={BookDetail} />
-          <Route path="/add-book" exact component={AddBook} />
-          <Route path="/edit-book/:id" exact component={EditBook} />
-          <Route path="/login" exact component={Login} />
-          <Route path="/register" exact component={Register} />
-          {/* You can add more routes as needed */}
-        </Switch>
+        <Routes>
+          <Route path="/" element={<BookList />} />
+          <Route path="/book/:id" element={<BookDetail />} />
+          <Route path="/add-book" element={<AddBook />} />
+          <Route path="/edit-book/:id" element={<EditBook />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          {/* we can add more routes if needed */}
+        </Routes>
       </AppLayout>
     </Router>
   );

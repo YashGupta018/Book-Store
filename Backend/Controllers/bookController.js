@@ -41,18 +41,18 @@ exports.getAllBooks = async (req, res) => {
 
 exports.getBookById = async (req, res) => {
     try {
-        console.log("Fetching book with bookID:", req.params.id);  // Log the received bookID
+        console.log("Fetching book with bookID:", req.params.id);  // log the received bookID
 
-        var book = await Book.findOne({ bookID: Number(req.params.id) }); // Use find with bookID
+        var book = await Book.findOne({ bookID: Number(req.params.id) }); // using find with bookID
         
-        console.log("Fetched book:", book);  // Log the retrieved book
+        console.log("Fetched book:", book);  // log the retrieved book
 
         if (!book) {
             return res.status(404).json({ message: "Book not found" });
         }
         res.status(200).json(book);
     } catch (error) {
-        console.error("Error in getBookById:", error);  // Log any errors
+        console.error("Error in getBookById:", error);  // log any errors
         res.status(500).json({ message: "Error retrieving book" });
     }
 };
