@@ -1,20 +1,22 @@
 const express = require('express');
 const userRoutes = require('./routes/userRoutes');
+const bookRoutes = require('./routes/bookRoutes');
+const cartRoutes = require('./routes/cartRoutes');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const cors = require('cors');
 
 const app = express();
-const bookRoutes = require('./routes/bookRoutes');
 
 app.use(cors());  // CORS for all routes
 app.use(express.json());
-app.use('/api/users', userRoutes);
 
 // this is to parse the incoming request
 app.use(bodyParser.json());
-app.use('/api/users', require('./routes/userRoutes'));
+
+app.use('/api/users', userRoutes);
 app.use('/api/books', bookRoutes);
+app.use('/api/cart', cartRoutes);
 
 app.get('/', (req, res) => {
     res.send('Online Bookstore API');

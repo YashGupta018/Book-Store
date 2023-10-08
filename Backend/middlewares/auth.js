@@ -31,4 +31,16 @@ const authenticate = (req, res, next) => {
     }
 };
 
-module.exports = { authenticate };
+// middleware to check if a user is an admin
+const isAdmin = (req, res, next) => {
+    console.log("Inside isAdmin middleware");
+    if (req.user && req.user.isAdmin) {
+        console.log("User is an admin");
+        next();
+    } else {
+        console.log("User is not an admin. Access denied.");
+        res.status(403).json({ message: "Access denied. Admin only." });
+    }
+};
+
+module.exports = { authenticate, isAdmin };

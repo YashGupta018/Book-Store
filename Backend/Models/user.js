@@ -22,7 +22,13 @@ const userSchema = new mongoose.Schema({
     purchasedBooks: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Book'
-    }]
+    }],
+
+    isAdmin: {
+        type: Boolean,
+        default: false
+    }
+    
 });
 
 // hashing the password before saving a new user
