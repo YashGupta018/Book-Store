@@ -1,11 +1,11 @@
-import { fetchAllBooks } from '../api'; // Adjust the path based on your directory structure
+import { fetchAllBooks } from '../api';
 
-// Action Types
+// action Types
 export const FETCH_BOOKS_REQUEST = 'FETCH_BOOKS_REQUEST';
 export const FETCH_BOOKS_SUCCESS = 'FETCH_BOOKS_SUCCESS';
 export const FETCH_BOOKS_FAILURE = 'FETCH_BOOKS_FAILURE';
 
-// Action Creators
+// action Creators
 export const fetchBooksRequest = () => {
     return {
         type: FETCH_BOOKS_REQUEST
@@ -26,7 +26,7 @@ export const fetchBooksFailure = (error) => {
     };
 };
 
-// Thunk Action Creator for fetching books
+// thunk action creator for fetching books
 export const fetchBooks = () => {
     return (dispatch) => {
         dispatch(fetchBooksRequest());

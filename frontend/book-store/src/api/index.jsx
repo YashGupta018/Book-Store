@@ -5,7 +5,7 @@ const api = axios.create({
     baseURL: "http://localhost:3000/api"
 });
 
-// Interceptors for handling responses and errors uniformly
+// interceptors for handling responses and errors uniformly
 api.interceptors.response.use(
     (response) => {
         return response;

@@ -13,7 +13,7 @@ exports.placeOrder = async (req, res) => {
             return res.status(400).json({ message: "Cart is empty" });
         }
 
-        // Calculate the total amount based on the prices of the books and their quantities
+        // calculating the total amount based on the prices of the books and their quantities
         let calculatedTotalAmount = 0;
         for (let item of cart.books) {
             console.log(`Book ID: ${item.book._id}, Price: ${item.book.price}, Quantity: ${item.quantity}`);
@@ -28,11 +28,11 @@ exports.placeOrder = async (req, res) => {
 
         console.log(`Calculated amount for user ${req.user.userId}: ${calculatedTotalAmount}`);
 
-        // Round to 2 decimal places
+        // round to 2 decimal places
         const roundedCalculatedTotalAmount = Math.round(calculatedTotalAmount * 100) / 100;
         const roundedProvidedAmount = Math.round(req.body.totalAmount * 100) / 100;
 
-        // Compare the rounded values
+        // compare the rounded values
         if (roundedCalculatedTotalAmount !== roundedProvidedAmount) {
             console.log(`Amount mismatch for user ${req.user.userId}: Calculated: ${roundedCalculatedTotalAmount}, Received: ${roundedProvidedAmount}`);
             return res.status(400).json({ message: "Total amount mismatch" });

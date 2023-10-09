@@ -4,7 +4,7 @@ import bookReducer from './path_to_bookReducer'; // Adjust the path
 
 const rootReducer = combineReducers({
     books: bookReducer,
-    // ... other reducers can be added here later
+    // ... we can add other reducers
 });
 
 const store = createStore(

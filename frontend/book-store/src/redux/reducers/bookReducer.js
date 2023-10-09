@@ -12,7 +12,7 @@ const bookReducer = (state = initialState, action) => {
             return { ...state, loading: false, books: action.payload };
         case 'FETCH_BOOKS_FAILURE':
             return { ...state, loading: false, error: action.error };
-        // ... we can add other action types as needed
+        // ... we can add other action types 
         default:
             return state;
     }
