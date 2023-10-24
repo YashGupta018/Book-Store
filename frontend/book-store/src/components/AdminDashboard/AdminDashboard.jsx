@@ -40,7 +40,6 @@ function AdminDashboard() {
                 </div>
             </div>
 
-            {/* main content */}
             <div className="main-content">
                 <div className="admin-content">
                     <h2>{isAdmin ? "Welcome to KitabKosh! Admin Dashboard" : "Welcome to KitabKosh! Explore books and more."}</h2>

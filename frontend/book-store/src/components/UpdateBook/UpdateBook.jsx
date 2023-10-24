@@ -3,28 +3,8 @@ import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import './UpdateBook.css';
 
-// function UpdateBook() {
-//     const [bookData, setBookData] = useState({
-//         title: '',
-//         authors: '',
-//         genre: '',
-//         bookID: ''  // Assuming we have the bookID
-//     });
-//     const [error, setError] = useState(null);
-
-//     useEffect(() => {
-//         const fetchBook = async () => {
-//             try {
-//                 const response = await axios.get(`http://localhost:3000/api/books/${bookData.bookID}`);
-//                 setBookData(response.data);
-//             } catch (err) {
-//                 setError("Error fetching book details");
-//             }
-//         };
-//         fetchBook();
-//     }, [bookData.bookID]);
 function UpdateBook() {
-    const { id } = useParams(); // Extracting the book ID from the route
+    const { id } = useParams();
 
     const [bookData, setBookData] = useState({
         title: '',

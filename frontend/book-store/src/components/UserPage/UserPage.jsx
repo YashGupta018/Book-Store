@@ -6,7 +6,7 @@ import './UserPage.css';
 function WelcomePage() {
     const [books, setBooks] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
-    const [searchBy, setSearchBy] = useState('title'); // Default search by title
+    const [searchBy, setSearchBy] = useState('title');
 
     useEffect(() => {
         const fetchBooks = async () => {
@@ -46,7 +46,7 @@ function WelcomePage() {
             const response = await axios.get(endpoint);
             
             if (searchBy === 'bookID') {
-                setBooks([response.data]);  // Wrap the single book in an array
+                setBooks([response.data]);
             } else {
                 setBooks(response.data);
             }

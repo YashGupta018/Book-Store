@@ -1,6 +1,6 @@
 import { createStore, applyMiddleware, combineReducers } from 'redux';
 import thunk from 'redux-thunk';
-import bookReducer from './path_to_bookReducer'; // Adjust the path
+import bookReducer from './path_to_bookReducer';
 
 const rootReducer = combineReducers({
     books: bookReducer,

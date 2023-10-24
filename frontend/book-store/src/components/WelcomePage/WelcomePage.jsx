@@ -6,7 +6,7 @@ import './WelcomePage.css';
 function WelcomePage() {
     const [books, setBooks] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
-    const [searchBy, setSearchBy] = useState('title'); // Default search by title
+    const [searchBy, setSearchBy] = useState('title');
 
     useEffect(() => {
         const fetchBooks = async () => {
@@ -37,7 +37,7 @@ function WelcomePage() {
             case 'bookID':
                 endpoint = `http://localhost:3000/api/books/${searchTerm}`;
                 break;
-            default: // title
+            default:
                 endpoint += `title=${searchTerm}`;
                 break;
         }
@@ -46,7 +46,7 @@ function WelcomePage() {
             const response = await axios.get(endpoint);
             
             if (searchBy === 'bookID') {
-                setBooks([response.data]);  // Wrap the single book in an array
+                setBooks([response.data]);
             } else {
                 setBooks(response.data);
             }

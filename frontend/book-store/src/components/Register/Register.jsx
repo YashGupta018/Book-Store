@@ -23,7 +23,7 @@ function Register() {
 
             if (response.data.success) {
                 console.log('Registered successfully');
-                navigate('/login'); // redirect to the login page
+                navigate('/login');
             }
         } catch (error) {
             console.error('Error during registration:', error);
