@@ -1,4 +1,4 @@
-.bookTable {
+/* .bookTable {
     width: 80%;
     margin: 20px auto;
     border-collapse: collapse;
@@ -13,4 +13,14 @@
 
 .bookTable a {
     text-decoration: none;
+} */
+
+.pagination-buttons {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.pagination-buttons button {
+    margin: 0 10px;
 }

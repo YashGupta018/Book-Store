@@ -67,9 +67,44 @@ exports.viewOrders = async (req, res) => {
     }
 };
 
+// exports.viewAllOrders = async (req, res) => {
+//     try {
+//         const orders = await Order.find({}).populate('books.book');
+//         console.log("Fetched all orders:", orders);
+//         res.status(200).json(orders);
+//     } catch (error) {
+//         console.error("Error fetching all orders:", error.message);
+//         res.status(500).json({ message: "Error fetching all orders", error: error.message });
+//     }
+// };
+
+// exports.viewAllOrders = async (req, res) => {
+//     try {
+//         const orders = await Order.find({})
+//                                   .populate('user', 'name email')  // populates user name and email
+//                                   .populate('books.book', 'title');  // populates book title
+//         console.log("Fetched all orders:", orders);
+//         res.status(200).json(orders);
+//     } catch (error) {
+//         console.error("Error fetching all orders:", error.message);
+//         res.status(500).json({ message: "Error fetching all orders", error: error.message });
+//     }
+// }; ------------------
+
+// exports.viewAllOrders = async (req, res) => {
+//     try {
+//         const orders = await Order.find({}).populate('books.book');
+//         console.log("Fetched all orders:", orders);
+//         res.status(200).json(orders);
+//     } catch (error) {
+//         console.error("Error fetching all orders:", error.message);
+//         res.status(500).json({ message: "Error fetching all orders", error: error.message });
+//     }
+// };
+
 exports.viewAllOrders = async (req, res) => {
     try {
-        const orders = await Order.find({}).populate('books.book');
+        const orders = await Order.find({}).populate('books.book').populate('user');
         console.log("Fetched all orders:", orders);
         res.status(200).json(orders);
     } catch (error) {
@@ -77,3 +112,5 @@ exports.viewAllOrders = async (req, res) => {
         res.status(500).json({ message: "Error fetching all orders", error: error.message });
     }
 };
+
+

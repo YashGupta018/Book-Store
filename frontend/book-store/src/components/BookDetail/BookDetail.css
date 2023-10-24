@@ -1,0 +1,36 @@
+.book-detail {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+img {
+    width: 10%;
+    height: 30%;
+}
+
+.book-info {
+    display: flex;
+    gap: 20px;
+}
+
+.book-details {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.add-to-cart-btn {
+    padding: 10px 15px;
+    background-color: #007BFF;
+    border: none;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+        background-color: #0056b3;
+    }
+}

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import './WelcomePage.css';
+import './UserPage.css';
 
 function WelcomePage() {
     const [books, setBooks] = useState([]);
@@ -78,8 +78,8 @@ function WelcomePage() {
                 <div className="button-container">
                     <Link to="/books" className="btn btn-cart">Books<i className="fas fa-shopping-cart"></i></Link>
                     <Link to="/cart" className="btn btn-cart">Cart<i className="fas fa-shopping-cart"></i></Link>
-                    <Link to="/login" className="btn btn-login">Login</Link>
-                    <Link to="/register" className="btn btn-register">Register</Link>
+                    <Link to="/order-detail" className="btn btn-login">Order Detail</Link>
+                    <Link to="/" className="btn btn-register">Logout</Link>
                 </div>
             </div>
             <div className="main-content">

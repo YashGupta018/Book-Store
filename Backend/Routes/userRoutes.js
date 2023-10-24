@@ -1,27 +1,33 @@
 const express = require('express');
 const router = express.Router();
-const userController = require('../controllers/userController'); // Import the user controller
-const { authenticate, isAdmin } = require('../middlewares/auth'); // Import both middlewares
+const userController = require('../controllers/userController');
+const { authenticate, isAdmin } = require('../middlewares/auth');
 
-// user registration (auth. not available)
+router.get('/search', userController.searchUser);
+
+// user registration
 router.post('/register', userController.register);
 
-// user login (auth. not available)
+// user login
 router.post('/login', userController.login);
 
-// protected route fetching user profile
+// fetch user profile
 router.get('/profile', authenticate, userController.getProfile);
 
-// user logout JWT token removal from frontend
+// logout (JWT token removal - frontend)
 router.post('/logout', authenticate, userController.logout);
 
-// route for admin to get all users
+// admin routes to manage users
 router.get('/all', authenticate, isAdmin, userController.getAllUsers);
+router.delete('/delete/:id', authenticate, isAdmin, userController.deleteUser);
+router.put('/role/:id', authenticate, isAdmin, userController.updateUserRole);
 
-// admin can delete any user
-router.delete('/:id', authenticate, isAdmin, userController.deleteUser);
-
-// admin can update user role 
-router.put('/:id/role', authenticate, isAdmin, userController.updateUserRole);
+// endpoint to verify token validity
+router.get('/verifyToken', authenticate, (req, res) => {
+    res.json({ 
+        isAuthenticated: true, 
+        isAdmin: req.user.isAdmin
+    });
+});
 
 module.exports = router;

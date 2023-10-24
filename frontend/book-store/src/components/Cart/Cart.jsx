@@ -1,50 +1,296 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+// import React, { useState } from 'react';
+// import axios from 'axios';
+// import './Cart.css';
+
+// const Cart = () => {
+//     const [quantity, setQuantity] = useState(1);
+//     const [pricePerItem, setPricePerItem] = useState(0); // Initialize to 0
+//     const [paymentMethod, setPaymentMethod] = useState('cashOnDelivery');
+
+//     const handleIncrement = () => {
+//         setQuantity(prevQuantity => prevQuantity + 1);
+//     };
+
+//     const handleDecrement = () => {
+//         if (quantity > 1) {
+//             setQuantity(prevQuantity => prevQuantity - 1);
+//         }
+//     };
+
+//     const totalPrice = quantity * pricePerItem;
+
+//     return (
+//         <section className="h-100 h-custom">
+//             <div className="container h-100 py-5">
+//                 <div className="row d-flex justify-content-center align-items-center h-100">
+//                     <div className="col">
+//                         <div className="table-responsive">
+//                             <table className="table">
+//                                 <thead>
+//                                     <tr>
+//                                         <th scope="col" className="h5">Shopping Bag</th>
+//                                         <th scope="col">Quantity</th>
+//                                         <th scope="col">Price</th>
+//                                     </tr>
+//                                 </thead>
+//                                 <tbody>
+//                                     <tr>
+//                                         <td>
+//                                             {/* Product details can be added here */}
+//                                         </td>
+//                                         <td className="align-middle">
+//                                             <div className="d-flex flex-row">
+//                                                 <button className="btn btn-link px-2" onClick={handleDecrement}>
+//                                                     <i className="fas fa-minus"></i>
+//                                                 </button>
+
+//                                                 <input 
+//                                                     value={quantity} 
+//                                                     onChange={(e) => setQuantity(Number(e.target.value))}
+//                                                     type="number"
+//                                                     className="form-control form-control-sm" 
+//                                                     style={{ width: '50px' }} 
+//                                                 />
+
+//                                                 <button className="btn btn-link px-2" onClick={handleIncrement}>
+//                                                     <i className="fas fa-plus"></i>
+//                                                 </button>
+//                                             </div>
+//                                         </td>
+//                                         <td className="align-middle">
+//                                             <p className="mb-0" style={{ fontWeight: 500 }}>₹{totalPrice}</p>
+//                                         </td>
+//                                     </tr>
+//                                 </tbody>
+//                             </table>
+//                         </div>
+
+//                         <div className="card shadow-2-strong mb-5 mb-lg-0" style={{ borderRadius: '16px' }}>
+//                             <div className="card-body p-4">
+//                                 <div className="row">
+//                                     <div className="col-lg-8">
+//                                         <h5>Payment Method</h5>
+//                                         <div className="d-flex flex-row pb-3">
+//                                             <div className="d-flex align-items-center pe-2">
+//                                                 <input className="form-check-input" type="radio" name="radioNoLabel" id="radioNoLabel1" value="" aria-label="..." checked />
+//                                             </div>
+//                                             <div className="rounded border w-100 p-3">
+//                                                 <p className="d-flex align-items-center mb-0">Cash on Delivery</p>
+//                                             </div>
+//                                         </div>
+//                                     </div>
+
+//                                     <div className="col-lg-4 col-xl-3">
+//                                         <div className="d-flex justify-content-between" style={{ fontWeight: 500 }}>
+//                                             <p className="mb-2">Subtotal</p>
+//                                             <p className="mb-2">₹{totalPrice}</p>
+//                                         </div>
+//                                         <div className="d-flex justify-content-between" style={{ fontWeight: 500 }}>
+//                                             <p className="mb-0">Shipping</p>
+//                                             {/* You can update the shipping price dynamically here */}
+//                                             <p className="mb-0">₹2.99</p>
+//                                         </div>
+//                                         <hr className="my-4" />
+//                                         {/* The total can be calculated as totalPrice + shipping */}
+//                                         <div className="d-flex justify-content-between mb-4" style={{ fontWeight: 500 }}>
+//                                             <p className="mb-2">Total (tax included)</p>
+//                                             <p className="mb-2">₹{totalPrice + 2.99}</p>
+//                                         </div>
+//                                         <button type="button" className="btn btn-primary btn-block btn-lg">
+//                                             <div className="d-flex justify-content-between">
+//                                                 <span>Checkout</span>
+//                                                 <span>₹{totalPrice + 2.99}</span>
+//                                             </div>
+//                                         </button>
+//                                     </div>
+//                                 </div>
+//                             </div>
+//                         </div>
+//                     </div>
+//                 </div>
+//             </div>
+//         </section>
+//     );
+// }
+
+// export default Cart;
+
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { useParams } from 'react-router-dom';
 import './Cart.css';
 
-function Cart() {
-    // sample cart items
-    const [cartItems, setCartItems] = useState([
-        { id: 1, name: 'The Alchemist', price: 400, quantity: 1, image: 'path_to_image1' },
-        { id: 2, name: 'Rich Dad Poor Dad', price: 350, quantity: 1, image: 'path_to_image2' },
-        { id: 3, name: 'Sapiens', price: 500, quantity: 1, image: 'path_to_image3' }
-    ]);
+const Cart = () => {
+    const { bookId } = useParams(); // Extract bookId from the URL
+    const [book, setBook] = useState(null);  // Store the book details
+    const [quantity, setQuantity] = useState(1);
+    const [enteredAmount, setEnteredAmount] = useState(''); // Store user entered amount
 
-    const handleQuantityChange = (id, change) => {
-        const updatedCartItems = cartItems.map(item => {
-            if (item.id === id) {
-                return { ...item, quantity: item.quantity + change };
+    useEffect(() => {
+        const fetchBookDetails = async () => {
+            try {
+                const response = await axios.get(`http://localhost:3000/api/books/${bookId}`);
+                setBook(response.data);
+            } catch (error) {
+                console.error('Error fetching book details:', error);
             }
-            return item;
-        });
-        setCartItems(updatedCartItems);
+        };
+        fetchBookDetails();
+    }, [bookId]);
+
+    const handleIncrement = () => setQuantity(prevQuantity => prevQuantity + 1);
+    const handleDecrement = () => {
+        if (quantity > 1) {
+            setQuantity(prevQuantity => prevQuantity - 1);
+        }
     };
 
-    const total = cartItems.reduce((acc, item) => acc + (item.price * item.quantity), 0);
+    const totalPrice = book ? book.price * quantity : 0;
+    const isAmountValid = parseFloat(enteredAmount) === totalPrice + 2.99;
+    
+    // useEffect(() => {
+
+    //     const fetchBookDetails = async () => {
+    //         try {
+    //             const response = await axios.get('http://localhost:3000/api/books/');
+    //             setBook(response.data);
+    //         } catch (error) {
+    //             console.error('Error fetching book details:', error);
+    //         }
+    //     };
+    //     fetchBookDetails();
+    // }, []);
+
+    // const handleIncrement = () => setQuantity(prevQuantity => prevQuantity + 1);
+    // const handleDecrement = () => {
+    //     if (quantity > 1) {
+    //         setQuantity(prevQuantity => prevQuantity - 1);
+    //     }
+    // };
+
+    // const totalPrice = book ? book.price * quantity : 0;
+    // const isAmountValid = parseFloat(enteredAmount) === totalPrice + 2.99;
+
+        // Fetch the book details when the component mounts
+        // Assuming there's an API endpoint '/api/cart/book-details'
+        // This is a placeholder and should be replaced with the actual endpoint
+    //     axios.get('/api/cart/book-details')
+    //         .then(response => {
+    //             setBook(response.data);
+    //         })
+    //         .catch(error => {
+    //             console.error("Error fetching book details:", error);
+    //         });
+    // }, []);
+
+    // const handleIncrement = () => {
+    //     setQuantity(prevQuantity => prevQuantity + 1);
+    // };
+
+    // const handleDecrement = () => {
+    //     if (quantity > 1) {
+    //         setQuantity(prevQuantity => prevQuantity - 1);
+    //     }
+    // };
+
+    // const totalPrice = book ? book.price * quantity : 0;
+
+    // const isAmountValid = parseFloat(enteredAmount) === totalPrice + 2.99;
 
     return (
-        <div className="cart-container">
-            <h1>Shopping Cart</h1>
-            <div className="cart-items">
-                {cartItems.map(item => (
-                    <div key={item.id} className="cart-item">
-                        <img src={item.image} alt={item.name} />
-                        <p>{item.name}</p>
-                        <p>₹{item.price}</p>
-                        <div className="quantity-control">
-                            <button onClick={() => handleQuantityChange(item.id, -1)}>-</button>
-                            <p>{item.quantity}</p>
-                            <button onClick={() => handleQuantityChange(item.id, 1)}>+</button>
+        <section className="h-100 h-custom">
+            <div className="container h-100 py-5">
+                <div className="row d-flex justify-content-center align-items-center h-100">
+                    <div className="col">
+                        <div className="table-responsive">
+                            <table className="table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col" className="h5">Shopping Bag</th>
+                                        <th scope="col">Quantity</th>
+                                        <th scope="col">Price</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {book && (
+                                        <tr>
+                                            <td>
+                                                <strong>{book.name}</strong><br/>
+                                                {book.authors.join(', ')}
+                                            </td>
+                                            <td className="align-middle">
+                                                <div className="d-flex flex-row">
+                                                    <button className="btn btn-link px-2" onClick={handleDecrement}>
+                                                        <i className="fas fa-minus"></i>
+                                                    </button>
+                                                    <input 
+                                                        value={quantity} 
+                                                        onChange={(e) => setQuantity(Number(e.target.value))}
+                                                        type="number"
+                                                        className="form-control form-control-sm" 
+                                                        style={{ width: '50px' }} 
+                                                    />
+                                                    <button className="btn btn-link px-2" onClick={handleIncrement}>
+                                                        <i className="fas fa-plus"></i>
+                                                    </button>
+                                                </div>
+                                            </td>
+                                            <td className="align-middle">
+                                                <p className="mb-0" style={{ fontWeight: 500 }}>₹{totalPrice}</p>
+                                            </td>
+                                        </tr>
+                                    )}
+                                </tbody>
+                            </table>
+                        </div>
+                        <div className="card shadow-2-strong mb-5 mb-lg-0" style={{ borderRadius: '16px' }}>
+                            <div className="card-body p-4">
+                                <div className="row">
+                                    <div className="col-lg-8">
+                                        <h5>Payment Method</h5>
+                                        <div className="d-flex flex-row pb-3">
+                                            <div className="rounded border w-100 p-3">
+                                                <p className="d-flex align-items-center mb-0">Cash on Delivery</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="col-lg-4 col-xl-3">
+                                        <div className="d-flex justify-content-between" style={{ fontWeight: 500 }}>
+                                            <p className="mb-2">Subtotal</p>
+                                            <p className="mb-2">₹{totalPrice}</p>
+                                        </div>
+                                        <div className="d-flex justify-content-between" style={{ fontWeight: 500 }}>
+                                            <p className="mb-0">Shipping</p>
+                                            <p className="mb-0">₹2.99</p>
+                                        </div>
+                                        <hr className="my-4" />
+                                        <div className="d-flex justify-content-between mb-4" style={{ fontWeight: 500 }}>
+                                            <p className="mb-2">Total (tax included)</p>
+                                            <p className="mb-2">₹{totalPrice + 2.99}</p>
+                                        </div>
+                                        <div className="mb-4">
+                                            <label>Enter Exact Amount:</label>
+                                            <input 
+                                                type="text"
+                                                value={enteredAmount}
+                                                onChange={(e) => setEnteredAmount(e.target.value)}
+                                                className="form-control"
+                                            />
+                                        </div>
+                                        <button type="button" className="btn btn-primary btn-block btn-lg" disabled={!isAmountValid}>
+                                            <div className="d-flex justify-content-between">
+                                                <span>Checkout</span>
+                                                <span>₹{totalPrice + 2.99}</span>
+                                            </div>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                ))}
+                </div>
             </div>
-            <div className="cart-summary">
-                <h2>Summary</h2>
-                <p>Total: ₹{total.toFixed(2)}</p>
-                <Link to="/checkout">Checkout</Link>
-            </div>
-        </div>
+        </section>
     );
 }
 
