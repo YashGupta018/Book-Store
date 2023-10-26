@@ -15,7 +15,7 @@ router.post('/login', userController.login);
 router.get('/profile', authenticate, userController.getProfile);
 
 // logout (JWT token removal - frontend)
-router.post('/logout', authenticate, userController.logout);
+// router.post('/logout', authenticate, userController.logout);
 
 // admin routes to manage users
 router.get('/all', authenticate, isAdmin, userController.getAllUsers);
@@ -31,3 +31,4 @@ router.get('/verifyToken', authenticate, (req, res) => {
 });
 
 module.exports = router;
+   
